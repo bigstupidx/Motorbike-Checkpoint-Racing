@@ -225,7 +225,7 @@ public class UICenterOnChild : MonoBehaviour
 			while(time<0.5f)
 			{
 				time+=pause;
-				mCenteredObject.transform.localScale = Vector3.Lerp(new Vector3(1f,1f,1f), new Vector3(1.5f,1.5f,1f),time*2f);
+				mCenteredObject.transform.localScale = Vector3.Lerp(new Vector3(1f,1f,1f), new Vector3(1.5f,1.5f,1f),time*3f);
 				yield return new WaitForSeconds(pause);
 			}
 		}
