@@ -30,10 +30,12 @@ public class BikeManager : MonoBehaviour {
 		//TODO: remove this string if need to have different default bike on game start
 		data.currentBike = 0;
 
-		if(data.currentLvl % 2 == 0)
-			bikePositions = positionsWrapers[0];
-		else
-			bikePositions = positionsWrapers[1];
+		bikePositions = positionsWrapers[data.currentLvl-1];
+
+//		if(data.currentLvl % 2 == 0)
+//			bikePositions = positionsWrapers[0];
+//		else
+//			bikePositions = positionsWrapers[1];
 
 		cam.distance = cameraDistance;
 		cam.haight = cameraHeight;

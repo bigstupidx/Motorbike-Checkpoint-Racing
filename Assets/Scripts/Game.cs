@@ -34,6 +34,8 @@ public class Game : MonoBehaviour {
 
 	public Transform missionsObj;
 
+	public Transform barriersObj;
+
 	public MusicSfx soundOBJ;
 
 	public UILabel forCash;
@@ -115,6 +117,7 @@ public class Game : MonoBehaviour {
 		taskView.text = missionDescription [data.currentLvl - 1];
 		taskImg.mainTexture = lvlTextures [data.currentLvl - 1];
 		setMissionItem ();
+		setBarrierItem ();
 		circleRemaining = itemsWrapper.transform.childCount;
 		circleRemaining -= data.GetFoundItemsCount ();
 		hideFoundItems ();
@@ -139,6 +142,16 @@ public class Game : MonoBehaviour {
 				missionsObj.GetChild(i).gameObject.SetActive(false);
 			else
 				GameObject.Find("BikeManager").GetComponent<BikeManager>().SetRotator(missionsObj.GetChild(i).GetComponent<ItemRotator>());
+		}
+	}
+
+	void setBarrierItem ()
+	{
+		string name = "Barrier" + data.currentLvl.ToString ();
+		for(int i = 0; i < barriersObj.childCount; i++)
+		{
+			if(barriersObj.GetChild(i).name != name)
+				barriersObj.GetChild(i).gameObject.SetActive(false);
 		}
 	}
 
