@@ -40,8 +40,18 @@ public class Game : MonoBehaviour {
 
 	public UILabel forCash;
 
+	public UILabel timeLbl;
+
 	GameObject itemsWrapper;
 	GameData data;
+
+	float currentTime;
+	bool isGameOver = false;
+	public bool IsGameOver{
+		get{
+			return isGameOver;
+		}
+	}
 
 	string[] missionDescription = 
 	{
@@ -65,17 +75,17 @@ public class Game : MonoBehaviour {
 
 	string[] itemFoundAfterText = 
 	{
-		" items remain!",
-		" items remain!",
-		" items remain!",
-		" items remain!",
-		" items remain!",
+		" checkpoints remain!",
+		" checkpoints remain!",
+		" checkpoints remain!",
+		" checkpoints remain!",
+		" checkpoints remain!",
 		" cars remain!"
 	};
 
 	string[] endLvlMessage = 
 	{
-		"Congratulations! You have found all the cash bags!",
+		"Congratulations! You have found all checkpoints!",
 		"Congratulations! You have found stolen car!",
 		"Congratulations! You have found all the drugs!",
 		"Congratulations! You have found stolen truck!",
@@ -122,6 +132,10 @@ public class Game : MonoBehaviour {
 		circleRemaining -= data.GetFoundItemsCount ();
 		//hideFoundItems ();
 		showScore ();
+
+		currentTime = GameSettings.getTimeForLevel (data.currentLvl - 1);
+		timeLbl.text = ((int)currentTime).ToString() + " sec.";
+		isGameOver = false;
 	}
 
 	void hideFoundItems ()
@@ -175,6 +189,29 @@ public class Game : MonoBehaviour {
 		tiltControls.SetActive (!toShow);
 	}
 
+	IEnumerator GameOver()
+	{
+		yield return new WaitForSeconds (3.5f);
+		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
+		GoTo.LoadEnvironmentChoose ();
+		yield return null;
+	}
+
+	void checkGameTime(){
+		if(isRunning == false) return;
+
+		if (currentTime <= 0 && isGameOver == false) {
+			isGameOver = true;
+			earningView.GetComponent<UILabel>().text = "Game Over!";
+			earningView.GetComponent<Animator>().Play("earning",0,0f);
+			//timeLbl.text = "Time Is Over!";
+			StartCoroutine (GameOver ());
+		} else if (currentTime > 0) {
+			currentTime -= Time.deltaTime;
+			timeLbl.text = ((int)currentTime).ToString() + " sec.";
+		}
+	}
+
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
@@ -193,6 +230,8 @@ public class Game : MonoBehaviour {
 				hideHomePopup();
 			}
 		}
+
+		checkGameTime ();
 	}
 
 

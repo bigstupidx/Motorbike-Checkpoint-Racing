@@ -27,6 +27,12 @@ public class GameSettings{
 	static float[] factorPoints = {1f,1.25f,1.5f};
 	static float[] stepForFactors = {0.25f,0.5f,1.5f};
 
+	static float[] listTimeLevel = {90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
+
+	public static float getTimeForLevel(int currentLevel){
+		return listTimeLevel[currentLevel];
+	}
+
 	public static float[] GetParameters()
 	{
 		return parameters [(int)currentComplexity];

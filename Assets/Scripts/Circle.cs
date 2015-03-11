@@ -52,6 +52,8 @@ public class Circle : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) 
 	{
+		if (gm.IsGameOver == true) return;
+
 		if(other.name.Trim() == "Body" && isShow)
 		{
 			isShow = false;
