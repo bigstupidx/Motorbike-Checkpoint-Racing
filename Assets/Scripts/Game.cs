@@ -120,7 +120,7 @@ public class Game : MonoBehaviour {
 		setBarrierItem ();
 		circleRemaining = itemsWrapper.transform.childCount;
 		circleRemaining -= data.GetFoundItemsCount ();
-		hideFoundItems ();
+		//hideFoundItems ();
 		showScore ();
 	}
 
@@ -214,8 +214,10 @@ public class Game : MonoBehaviour {
 		{
 			if(points != 0)
 			{
+				/* tmp_ don't save progress
 				data.addFoundItem(id);
 				data.save();
+				*/
 				circleRemaining -=1;
 				string textErn = "";
 				if(circleRemaining != 0)

@@ -18,7 +18,7 @@ public class GameData{
 	public List<int> allowBikes;
 	public List<List<int>> collectedItems;
 
-	private string version = "save_00098";
+	private string version = "save_00099";
 	public static GameData Get()
 	{
 		if (instance == null)

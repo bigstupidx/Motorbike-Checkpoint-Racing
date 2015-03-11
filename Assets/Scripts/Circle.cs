@@ -5,7 +5,7 @@ public class Circle : MonoBehaviour {
 
 	public Type type;
 	public Material [] materials;
-	private int[] points = {1000,1250,1750,2000,2250,-1,-1,-1};
+	private int[] points = {-1,-1,-1,-1,-1,-1,-1,-1,-1};
 	private GameData data;
 	[HideInInspector]
 	public bool isShow = true;
@@ -19,7 +19,8 @@ public class Circle : MonoBehaviour {
 		white,
 		collectable,
 		drug,
-		gold
+		gold,
+		checkpoint
 	}
 
 	void Start()
