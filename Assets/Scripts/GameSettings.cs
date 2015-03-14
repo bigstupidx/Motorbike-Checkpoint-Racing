@@ -30,7 +30,7 @@ public class GameSettings{
 	// set time for each level
 	static float[] listTimeLevel = {90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
 	// set level for unlocking next bike
-	static int[] listUnlockingBike = {1,2,2,2};
+	static int[] listUnlockingBike = {1,2,2,3};
 
 	public static int getLevelForUnlockBike(int currentBike){
 		return listUnlockingBike[currentBike];
