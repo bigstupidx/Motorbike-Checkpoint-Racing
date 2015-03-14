@@ -146,6 +146,21 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+	public void restartCurrentMission(){
+		foreach (GameObject checkPoint in listCheckPoints)
+			checkPoint.SetActive (true);
+
+		circleRemaining = itemsWrapper.transform.childCount;
+		circleRemaining -= data.GetFoundItemsCount ();
+		StartCoroutine(refreshCircles());
+		showScore ();
+		currentTime = GameSettings.getTimeForLevel (data.currentLvl - 1);
+		timeLbl.text = ((int)currentTime).ToString() + " sec.";
+		isGameOver = false;
+	}
+
+	List<GameObject> listCheckPoints = new List<GameObject>();
+
 	void setMissionItem ()
 	{
 		string name = "Mission " + data.currentLvl.ToString ();
@@ -154,8 +169,13 @@ public class Game : MonoBehaviour {
 		{
 			if(missionsObj.GetChild(i).name != name)
 				missionsObj.GetChild(i).gameObject.SetActive(false);
-			else
+			else{
+				Circle[] listCircleCurrentMission = missionsObj.GetChild(i).GetComponentsInChildren<Circle>();
+				listCheckPoints.Clear();
+				foreach(Circle circleObj in listCircleCurrentMission)
+					listCheckPoints.Add(circleObj.gameObject);
 				GameObject.Find("BikeManager").GetComponent<BikeManager>().SetRotator(missionsObj.GetChild(i).GetComponent<ItemRotator>());
+			}
 		}
 	}
 

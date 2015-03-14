@@ -84,10 +84,12 @@ public class BikeManager : MonoBehaviour {
 	public void OnReset()
 	{
 		Transform tr;
-		tr = bikePositions.FindChild ("Position " + (data.currentBike + 1).ToString ()).transform;
+		tr = bikePositions.FindChild ("Position " + data.currentLvl.ToString ()).transform;
 		bikesContols.transform.position = tr.position;
 		bikesContols.transform.rotation = tr.rotation;
 		bikesContols.rigidbody.velocity = Vector3.zero;
+
+		GameObject.FindObjectOfType<Game> ().restartCurrentMission ();
 	}
 
 	void releaseAll()
