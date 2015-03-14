@@ -88,7 +88,7 @@ public class ShopNew : MonoBehaviour {
 
 	void showInfo ()
 	{
-		if(data.bikeIsUnlock(curBike))
+		if(data.allowLvls >= GameSettings.getLevelForUnlockBike(curBike))
 		{
 			unlockBtn.SetActive(false);
 			playBtn.SetActive(true);
@@ -116,16 +116,10 @@ public class ShopNew : MonoBehaviour {
 	public void areaClick()
 	{
 		if(isAction) return;
-		if (data.bikeIsUnlock (curBike))
-		{
-			isAction = true;
-			choisePopupLabel.text = "Use "+bikeNames[curBike]+" to play?";
-			choisePopup.SetActive (true);
-		}
-//		else if(data.cash >= prices[curBike])
-//			buyPopup.SetActive(true);
-//		else
-//			nomoneyPopup.SetActive(true);
+
+		isAction = true;
+		choisePopupLabel.text = "Use "+bikeNames[curBike]+" to play?";
+		choisePopup.SetActive (true);
 	}
 	public void buyBike()
 	{
@@ -144,7 +138,7 @@ public class ShopNew : MonoBehaviour {
 		data.currentBike = curBike;
 		data.save ();
 		loadingScreen.SetActive (true);
-		GoTo.LoadGameTownOne ();
+		GoTo.LoadEnvironmentChoose();
 	}
 
 	public void closeBuyPopup()

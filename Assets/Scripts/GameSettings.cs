@@ -27,7 +27,14 @@ public class GameSettings{
 	static float[] factorPoints = {1f,1.25f,1.5f};
 	static float[] stepForFactors = {0.25f,0.5f,1.5f};
 
+	// set time for each level
 	static float[] listTimeLevel = {90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
+	// set level for unlocking next bike
+	static int[] listUnlockingBike = {1,2,2,2};
+
+	public static int getLevelForUnlockBike(int currentBike){
+		return listUnlockingBike[currentBike];
+	}
 
 	public static float getTimeForLevel(int currentLevel){
 		return listTimeLevel[currentLevel];
