@@ -304,6 +304,7 @@ public class Game : MonoBehaviour {
 
 	IEnumerator goToLvlChoose()
 	{
+		isRunning = false;
 		yield return new WaitForSeconds (3.5f);
 		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
 		GoTo.LoadEnvironmentChoose ();
