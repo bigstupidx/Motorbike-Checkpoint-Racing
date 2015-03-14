@@ -9,6 +9,11 @@ public class GoTo : MonoBehaviour {
 		Application.LoadLevel ("main_menu");
 	}
 
+	public static void LoadNewShop()
+	{
+		Application.LoadLevel ("new_shop");
+	}
+
 	public static void LoadEnvironmentChoose()
 	{
 		Application.LoadLevel ("environment_choose");
