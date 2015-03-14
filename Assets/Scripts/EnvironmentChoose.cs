@@ -88,6 +88,11 @@ public class EnvironmentChoose : MonoBehaviour {
 //		playGame(GoTo.LoadGameTownTwo,Int32.Parse(lvl.name));
 //	}
 
+	public void GoToGarage(){
+		GoTo.LoadNewShop ();
+	}
+
+
 	void playGame(int lvl)
 	{
 		if(lvl > data.allowLvls) return;

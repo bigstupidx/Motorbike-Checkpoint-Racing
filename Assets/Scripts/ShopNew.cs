@@ -98,7 +98,8 @@ public class ShopNew : MonoBehaviour {
 		{
 			playBtn.SetActive(false);
 			unlockBtn.SetActive(true);
-			bikeInfo.text ="Price: " + prices[curBike].ToString() + " points";
+			unlockBtn.GetComponentInChildren<UILabel>().text = "Will be unlocked at level " + GameSettings.getLevelForUnlockBike(curBike).ToString();
+			bikeInfo.text =bikeNames[curBike];
 		}
 	}
 
