@@ -134,8 +134,26 @@ public class Game : MonoBehaviour {
 		showScore ();
 
 		currentTime = GameSettings.getTimeForLevel (data.currentLvl - 1);
-		timeLbl.text = ((int)currentTime).ToString() + " sec.";
+		setTimer ();
 		isGameOver = false;
+	}
+
+	void setTimer(){
+		int minutes = (int)(currentTime / 60);
+		int seconds = (int)(currentTime % 60);
+		int miliseconds = (int)((currentTime*1000) % 1000);
+		string minutes_str = (minutes < 10) ? ("0" + minutes.ToString ()) : minutes.ToString ();
+		string seconds_str = (seconds < 10) ? ("0" + seconds.ToString ()) : seconds.ToString ();
+
+		string miliseconds_str;
+		if (miliseconds >= 10 && miliseconds < 100)
+			miliseconds_str = "0" + miliseconds.ToString ();
+		else if(miliseconds < 10)
+			miliseconds_str = "00" + miliseconds.ToString ();
+		else
+			miliseconds_str = miliseconds.ToString ();
+
+		timeLbl.text = minutes_str + ":" + seconds_str + ":" + miliseconds_str;
 	}
 
 	void hideFoundItems ()
@@ -155,7 +173,7 @@ public class Game : MonoBehaviour {
 		StartCoroutine(refreshCircles());
 		showScore ();
 		currentTime = GameSettings.getTimeForLevel (data.currentLvl - 1);
-		timeLbl.text = ((int)currentTime).ToString() + " sec.";
+		setTimer ();
 		isGameOver = false;
 	}
 
@@ -222,13 +240,13 @@ public class Game : MonoBehaviour {
 
 		if (currentTime <= 0 && isGameOver == false) {
 			isGameOver = true;
+			timeLbl.text = "00:00:000";
 			earningView.GetComponent<UILabel>().text = "Game Over!";
 			earningView.GetComponent<Animator>().Play("earning",0,0f);
-			//timeLbl.text = "Time Is Over!";
 			StartCoroutine (GameOver ());
 		} else if (currentTime > 0) {
 			currentTime -= Time.deltaTime;
-			timeLbl.text = ((int)currentTime).ToString() + " sec.";
+			setTimer ();
 		}
 	}
 
@@ -279,9 +297,12 @@ public class Game : MonoBehaviour {
 				*/
 				circleRemaining -=1;
 				string textErn = "";
-				if(circleRemaining != 0)
-					textErn = itemFoundPreText[data.currentLvl-1] + (circleRemaining-1).ToString() + itemFoundAfterText[data.currentLvl-1];
-				else
+				if(circleRemaining != 0){
+					if(circleRemaining == 1)
+						textErn = "The finish will be soon!";
+					else
+						textErn = itemFoundPreText[data.currentLvl-1] + (circleRemaining-1).ToString() + itemFoundAfterText[data.currentLvl-1];
+				}else
 				{
 					//GameObject.Find ("BikeManager").GetComponent<BikeManager> ().SetAdditionalBike();
 					textErn = endLvlMessage[data.currentLvl-1];
