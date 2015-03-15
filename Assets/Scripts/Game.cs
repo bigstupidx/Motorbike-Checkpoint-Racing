@@ -85,7 +85,7 @@ public class Game : MonoBehaviour {
 
 	string[] endLvlMessage = 
 	{
-		"Congratulations! You have found all checkpoints!",
+		"Congratulations! You finished the race!",
 		"Congratulations! You have found stolen car!",
 		"Congratulations! You have found all the drugs!",
 		"Congratulations! You have found stolen truck!",
