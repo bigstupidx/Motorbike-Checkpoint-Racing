@@ -280,7 +280,7 @@ public class Game : MonoBehaviour {
 				circleRemaining -=1;
 				string textErn = "";
 				if(circleRemaining != 0)
-					textErn = itemFoundPreText[data.currentLvl-1] + circleRemaining.ToString() + itemFoundAfterText[data.currentLvl-1];
+					textErn = itemFoundPreText[data.currentLvl-1] + (circleRemaining-1).ToString() + itemFoundAfterText[data.currentLvl-1];
 				else
 				{
 					//GameObject.Find ("BikeManager").GetComponent<BikeManager> ().SetAdditionalBike();
@@ -295,10 +295,13 @@ public class Game : MonoBehaviour {
 
 				earningView.GetComponent<UILabel>().text =textErn;
 				earningView.GetComponent<Animator>().Play("earning",0,0f);
+
+
 			}
 			if(forCash == null)
 				forCash = GameObject.Find("forCash").GetComponent<UILabel>();
-			forCash.text = (itemsWrapper.transform.childCount - circleRemaining).ToString() + " / "+itemsWrapper.transform.childCount.ToString();
+			if(circleRemaining != 0)
+			forCash.text = (itemsWrapper.transform.childCount - circleRemaining).ToString() + " / "+(itemsWrapper.transform.childCount-1).ToString();
 		}
 	}
 
