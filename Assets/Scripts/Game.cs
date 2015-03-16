@@ -55,7 +55,7 @@ public class Game : MonoBehaviour {
 
 	string[] missionDescription = 
 	{
-		"Bank robbery reported. Robbers got away but dumped cash bags around the city. It's your job to go find them.",
+		"Drive to the finish line as quickly as possible",
 		"Reports of a stolen vehicle in the area. Drive around and locate the stolen vehicle.",
 		"Robbers are hiding the stashes around the city. We have reports of their known locations, find them.",
 		"We’re getting reports of a stolen truck full of gold bars. Locate the stolen truck.",
@@ -133,25 +133,32 @@ public class Game : MonoBehaviour {
 		//hideFoundItems ();
 		showScore ();
 
-		currentTime = GameSettings.getTimeForLevel (data.currentLvl - 1);
+		//currentTime = GameSettings.getTimeForLevel (data.currentLvl - 1);
 		setTimer ();
 		isGameOver = false;
+
+		forCash.text = "";
 	}
 
 	void setTimer(){
 		int minutes = (int)(currentTime / 60);
 		int seconds = (int)(currentTime % 60);
 		int miliseconds = (int)((currentTime*1000) % 1000);
-		string minutes_str = (minutes < 10) ? ("0" + minutes.ToString ()) : minutes.ToString ();
+		string minutes_str = minutes.ToString ();
+//		string minutes_str = (minutes < 10) ? ("0" + minutes.ToString ()) : minutes.ToString ();
 		string seconds_str = (seconds < 10) ? ("0" + seconds.ToString ()) : seconds.ToString ();
 
 		string miliseconds_str;
-		if (miliseconds >= 10 && miliseconds < 100)
-			miliseconds_str = "0" + miliseconds.ToString ();
-		else if(miliseconds < 10)
-			miliseconds_str = "00" + miliseconds.ToString ();
+		if (miliseconds/10 < 10)
+			miliseconds_str = "0" + (miliseconds/10).ToString ();
 		else
-			miliseconds_str = miliseconds.ToString ();
+			miliseconds_str = (miliseconds/10).ToString ();
+//		if (miliseconds >= 10 && miliseconds < 100)
+//			miliseconds_str = "0" + miliseconds.ToString ();
+//		else if(miliseconds < 10)
+//			miliseconds_str = "00" + miliseconds.ToString ();
+//		else
+//			miliseconds_str = miliseconds.ToString ();
 
 		timeLbl.text = minutes_str + ":" + seconds_str + ":" + miliseconds_str;
 	}
@@ -250,6 +257,13 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+	void refreshTimer(){
+		if(isRunning == false) return;
+
+		currentTime += Time.deltaTime;
+		setTimer ();
+	}
+
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
@@ -269,7 +283,8 @@ public class Game : MonoBehaviour {
 			}
 		}
 
-		checkGameTime ();
+		//checkGameTime ();
+		refreshTimer ();
 	}
 
 
@@ -297,15 +312,18 @@ public class Game : MonoBehaviour {
 				*/
 				circleRemaining -=1;
 				string textErn = "";
-				if(circleRemaining != 0){
-					if(circleRemaining == 1)
-						textErn = "The finish will be soon!";
-					else
-						textErn = itemFoundPreText[data.currentLvl-1] + (circleRemaining-1).ToString() + itemFoundAfterText[data.currentLvl-1];
-				}else
-				{
+//				if(circleRemaining != 0){
+//					if(circleRemaining == 1)
+//						textErn = "The finish will be soon!";
+//					else
+//						textErn = itemFoundPreText[data.currentLvl-1] + (circleRemaining-1).ToString() + itemFoundAfterText[data.currentLvl-1];
+//				}else
+//				{
 					//GameObject.Find ("BikeManager").GetComponent<BikeManager> ().SetAdditionalBike();
+				if(circleRemaining == 0){
 					textErn = endLvlMessage[data.currentLvl-1];
+					earningView.GetComponent<UILabel>().text =textErn;
+					earningView.GetComponent<Animator>().Play("earning",0,0f);
 					if(data.currentLvl == data.allowLvls)
 					{
 						data.allowLvls ++;
@@ -313,16 +331,17 @@ public class Game : MonoBehaviour {
 					}
 					StartCoroutine(goToLvlChoose());
 				}
+//				}
 
-				earningView.GetComponent<UILabel>().text =textErn;
-				earningView.GetComponent<Animator>().Play("earning",0,0f);
+//				earningView.GetComponent<UILabel>().text =textErn;
+//				earningView.GetComponent<Animator>().Play("earning",0,0f);
 
 
 			}
-			if(forCash == null)
-				forCash = GameObject.Find("forCash").GetComponent<UILabel>();
-			if(circleRemaining != 0)
-			forCash.text = (itemsWrapper.transform.childCount - circleRemaining).ToString() + " / "+(itemsWrapper.transform.childCount-1).ToString();
+//			if(forCash == null)
+//				forCash = GameObject.Find("forCash").GetComponent<UILabel>();
+//			if(circleRemaining != 0)
+//			forCash.text = (itemsWrapper.transform.childCount - circleRemaining).ToString() + " / "+(itemsWrapper.transform.childCount-1).ToString();
 		}
 	}
 
