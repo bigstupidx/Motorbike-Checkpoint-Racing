@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameSettings{
 
@@ -31,6 +32,15 @@ public class GameSettings{
 	static float[] listTimeLevel = {90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
 	// set level for unlocking next bike
 	static int[] listUnlockingBike = {1,2,2,3};
+
+	static BikeStatics[] bikeStatisticsArray = {new BikeStatics(0.35f, 0.32f, 0.40f, 0.44f), 
+												new BikeStatics(0.50f, 0.57f, 0.48f, 0.60f), 
+												new BikeStatics(0.68f, 0.62f, 0.55f, 0.60f),
+												new BikeStatics(0.87f, 0.90f, 0.75f, 0.68f)};
+
+	public static BikeStatics getCurrentBikeStatistics(int currentBike){
+		return bikeStatisticsArray[currentBike];
+	}
 
 	public static int getLevelForUnlockBike(int currentBike){
 		return listUnlockingBike[currentBike];
@@ -65,5 +75,19 @@ public class GameSettings{
 	public static float GetStep()
 	{
 		return stepForFactors [(int)currentComplexity];
+	}
+}
+
+public class BikeStatics{
+	public float topSpeed;
+	public float acceleration;
+	public float lean;
+	public float grip;
+
+	public BikeStatics(float topSpeed, float acceleration, float lean, float grip){
+		this.topSpeed = topSpeed;
+		this.acceleration = acceleration;
+		this.lean = lean;
+		this.grip = grip;
 	}
 }

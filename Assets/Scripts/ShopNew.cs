@@ -19,6 +19,11 @@ public class ShopNew : MonoBehaviour {
 	public GameObject unlockBtn;
 	public GameObject playBtn;
 
+	public UISlider topSpeedSlider;
+	public UISlider AccelerationSlider;
+	public UISlider leanSlider;
+	public UISlider gripSlider;
+
 	private int curBike;
 	private GameData data;
 
@@ -36,6 +41,7 @@ public class ShopNew : MonoBehaviour {
 		cashView.text = "Points: " + data.cash.ToString ();
 		bikeInfo.text = bikeNames [curBike];
 		chooseBike (curBike);
+		showStatistic (curBike);
 		showInfo ();
 	}
 
@@ -70,6 +76,7 @@ public class ShopNew : MonoBehaviour {
 			curBike = bikes.Length - 1;
 		//cam.target = bikes [curBike].transform;
 		chooseBike (curBike);
+		showStatistic (curBike);
 		showInfo ();
 	}
 
@@ -83,7 +90,16 @@ public class ShopNew : MonoBehaviour {
 				curBike = 0;
 		//cam.target = bikes [curBike].transform;
 		chooseBike (curBike);
+		showStatistic (curBike);
 		showInfo ();
+	}
+
+	void showStatistic(int currentBike){
+		BikeStatics bikeStat = GameSettings.getCurrentBikeStatistics (currentBike);
+		topSpeedSlider.value = bikeStat.topSpeed;
+		AccelerationSlider.value = bikeStat.acceleration;
+		leanSlider.value = bikeStat.lean;
+		gripSlider.value = bikeStat.grip;
 	}
 
 	void showInfo ()
