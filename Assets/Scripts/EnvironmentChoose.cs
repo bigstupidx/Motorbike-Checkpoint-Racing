@@ -10,25 +10,29 @@ public class EnvironmentChoose : MonoBehaviour {
 	public GameObject levelList;
 	public GameObject levelItem;
 	public GameData data;
+	public GameObject leftButton;
+	public GameObject rightButton;
+	public GameObject btnPlay;
+	public GameObject titleLocked;
+
 	[HideInInspector]
 	public List<UITexture> lvlsView;
+
+	private int numItem = 0;
+	private int countLevels = 15;
+
 	void Start()
 	{
 		data = GameData.Get ();
 		lvlsView = new List<UITexture> ();
 		createItems ();
-		UICenterOnChild center = NGUITools.FindInParents<UICenterOnChild>(levelList);
-		if (center != null)
-		{
-			if (center.enabled)
-				center.CenterOn(levelList.transform.GetChild(1).transform);
-		}
+		//RightClick ();
 		setLvlsView ();
 	}
 
 	void createItems ()
 	{
-		for(int i =0;i<15;i++)
+		for(int i =0;i<countLevels;i++)
 		{
 			var levelButton = Instantiate(levelItem, levelList.transform.position, Quaternion.identity) as GameObject;
 			
@@ -69,8 +73,17 @@ public class EnvironmentChoose : MonoBehaviour {
 		}
 	}
 
+	bool f = false;
+
 	void Update()
 	{
+		// cheat for aligne child on center after start
+		if (f == false) {
+			RightClick();
+			f = true;
+		}
+
+
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			PreClosePopup.showPopup = true;
@@ -87,6 +100,49 @@ public class EnvironmentChoose : MonoBehaviour {
 //	{
 //		playGame(GoTo.LoadGameTownTwo,Int32.Parse(lvl.name));
 //	}
+
+	private void checkAvailableLevel(){
+		if (numItem + 1 <= data.allowLvls) {
+			btnPlay.SetActive (true);
+			titleLocked.SetActive (false);
+		} else {
+			btnPlay.SetActive (false);
+			titleLocked.SetActive (true);
+		}
+	}
+
+	private void setItemInListView(int numItem){
+		UICenterOnChild center = NGUITools.FindInParents<UICenterOnChild>(levelList);
+		if (center != null)
+		{
+			if (center.enabled)
+				center.CenterOn(levelList.transform.GetChild(numItem).transform);
+		}
+	}
+
+	public void LeftClick(){
+		if(numItem > 0)
+			numItem--;
+		setItemInListView (numItem);
+		if (numItem == 0)
+			leftButton.SetActive (false);
+		rightButton.SetActive (true);
+		checkAvailableLevel ();
+	}
+
+	public void RightClick(){
+		if(numItem < countLevels-1)
+			numItem++;
+		setItemInListView (numItem);
+		if (numItem == countLevels-1)
+			rightButton.SetActive (false);
+		leftButton.SetActive (true);
+		checkAvailableLevel ();
+	}
+
+	public void BtnPlay(){
+		playGame(numItem+1);
+	}
 
 	public void GoToGarage(){
 		GoTo.LoadNewShop ();
