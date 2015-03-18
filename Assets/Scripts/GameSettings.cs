@@ -33,10 +33,11 @@ public class GameSettings{
 	// set level for unlocking next bike
 	static int[] listUnlockingBike = {1,2,2,3};
 
-	static BikeStatics[] bikeStatisticsArray = {new BikeStatics(0.35f, 0.32f, 0.40f, 0.44f), 
-												new BikeStatics(0.50f, 0.57f, 0.48f, 0.60f), 
-												new BikeStatics(0.68f, 0.62f, 0.55f, 0.60f),
-												new BikeStatics(0.87f, 0.90f, 0.75f, 0.68f)};
+	// speed, acceleration, lean, handling
+	static BikeStatics[] bikeStatisticsArray = {new BikeStatics(0.7f, 0.8f, 0.85f, 0.8f), 
+												new BikeStatics(0.6f, 0.5f, 0.5f, 0.4f), 
+												new BikeStatics(0.45f, 0.7f, 0.7f, 0.75f),
+												new BikeStatics(0.65f, 0.9f, 0.7f, 0.55f)};
 
 	public static BikeStatics getCurrentBikeStatistics(int currentBike){
 		return bikeStatisticsArray[currentBike];
