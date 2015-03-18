@@ -179,7 +179,7 @@ public class Game : MonoBehaviour {
 		circleRemaining -= data.GetFoundItemsCount ();
 		StartCoroutine(refreshCircles());
 		showScore ();
-		currentTime = GameSettings.getTimeForLevel (data.currentLvl - 1);
+		currentTime = 0f;//GameSettings.getTimeForLevel (data.currentLvl - 1);
 		setTimer ();
 		isGameOver = false;
 	}
