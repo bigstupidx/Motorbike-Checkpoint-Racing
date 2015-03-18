@@ -144,8 +144,8 @@ public class EnvironmentChoose : MonoBehaviour {
 		playGame(numItem+1);
 	}
 
-	public void GoToGarage(){
-		GoTo.LoadNewShop ();
+	public void GoToMainMenu(){
+		GoTo.LoadMenu ();
 	}
 
 
@@ -158,6 +158,6 @@ public class EnvironmentChoose : MonoBehaviour {
 		loadScreen.SetActive (true);
 		data.currentLvl = lvl;
 		data.save ();
-		GoTo.LoadGameTownOne ();
+		GoTo.LoadNewShop ();
 	}
 }

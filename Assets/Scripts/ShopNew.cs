@@ -155,7 +155,7 @@ public class ShopNew : MonoBehaviour {
 		data.currentBike = curBike;
 		data.save ();
 		loadingScreen.SetActive (true);
-		GoTo.LoadEnvironmentChoose();
+		GoTo.LoadGameTownOne ();
 	}
 
 	public void closeBuyPopup()
