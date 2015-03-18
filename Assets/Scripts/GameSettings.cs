@@ -34,10 +34,14 @@ public class GameSettings{
 	static int[] listUnlockingBike = {1,2,2,3};
 
 	// speed, acceleration, lean, handling
-	static BikeStatics[] bikeStatisticsArray = {new BikeStatics(0.7f, 0.8f, 0.85f, 0.8f), 
+	static BikeStatics[] bikeStatisticsArray = {new BikeStatics(0.45f, 0.7f, 0.7f, 0.75f), 
 												new BikeStatics(0.6f, 0.5f, 0.5f, 0.4f), 
-												new BikeStatics(0.45f, 0.7f, 0.7f, 0.75f),
-												new BikeStatics(0.65f, 0.9f, 0.7f, 0.55f)};
+												new BikeStatics(0.65f, 0.9f, 0.7f, 0.55f),
+												new BikeStatics(0.7f, 0.8f, 0.85f, 0.8f)};
+//	static BikeStatics[] bikeStatisticsArray = {new BikeStatics(0.7f, 0.8f, 0.85f, 0.8f), 
+//												new BikeStatics(0.6f, 0.5f, 0.5f, 0.4f), 
+//												new BikeStatics(0.45f, 0.7f, 0.7f, 0.75f),
+//												new BikeStatics(0.65f, 0.9f, 0.7f, 0.55f)};
 
 	public static BikeStatics getCurrentBikeStatistics(int currentBike){
 		return bikeStatisticsArray[currentBike];
