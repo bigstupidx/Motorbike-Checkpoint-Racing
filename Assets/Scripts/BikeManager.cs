@@ -23,6 +23,9 @@ public class BikeManager : MonoBehaviour {
 	float extraValue = 25f;
 	bool isExtra = false;
 
+	int countBikes = 4;
+
+	GameObject[] listBikes;
 
 	void Awake()
 	{
@@ -36,7 +39,33 @@ public class BikeManager : MonoBehaviour {
 
 		setBikeControl ();
 		setBikeProperties ();
+
+		listBikes = new GameObject[countBikes];
+		for(int i=0; i<countBikes; i++){
+			listBikes[i] = GameObject.Find("Motorbike "+(i+1).ToString());
+		}
+
+		setEnableAllBikes (false);
+		setEnableCurrentBike ();
 	}
+
+	private void setEnableCurrentBike(){
+		listBikes [data.currentBike].SetActive (true);
+		listBikes [data.currentBike].GetComponent<AudioSource> ().mute = false;
+	}
+
+	public void setEnableAllBikes(bool enabled){
+		for (int i=0; i<countBikes; i++) {
+			if(enabled){
+				listBikes [i].SetActive (enabled);
+				listBikes [i].GetComponent<AudioSource> ().mute = enabled;
+			}else{
+				listBikes [i].GetComponent<AudioSource> ().mute = !enabled;
+				listBikes [i].SetActive (enabled);
+			}
+		}
+	}
+
 	public void SetRotator(ItemRotator itm)
 	{
 		rotator = itm;
@@ -45,6 +74,7 @@ public class BikeManager : MonoBehaviour {
 
 	public void Reset()
 	{
+		setEnableAllBikes (true);
 		bikesContols.gameObject.SetActive(true);
 		releaseAll ();
 		bikesContols.transform.GetComponent<BikeGUI> ().enabled = false;
