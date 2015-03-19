@@ -60,6 +60,7 @@ public class EnvironmentChoose : MonoBehaviour {
 		else
 		{
 			NGUITools.FindInParents<UICenterOnChild>(levelList).CenterOn(currentButton.transform.parent.transform);
+			CheckIndexAfterOnCenterItem(Int32.Parse(currentButton.name)-1);
 		}
 	}
 	void setLvlsView ()
@@ -118,6 +119,19 @@ public class EnvironmentChoose : MonoBehaviour {
 			if (center.enabled)
 				center.CenterOn(levelList.transform.GetChild(numItem).transform);
 		}
+	}
+
+	public void CheckIndexAfterOnCenterItem(int index){
+		numItem = index;
+		if (numItem == 0)
+			leftButton.SetActive (false);
+		else if (numItem == countLevels - 1)
+			rightButton.SetActive (false);
+		else {
+			leftButton.SetActive (true);
+			rightButton.SetActive (true);
+		}
+		checkAvailableLevel ();
 	}
 
 	public void LeftClick(){
