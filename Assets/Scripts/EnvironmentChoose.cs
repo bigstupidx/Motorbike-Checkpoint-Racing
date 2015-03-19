@@ -15,6 +15,8 @@ public class EnvironmentChoose : MonoBehaviour {
 	public GameObject btnPlay;
 	public GameObject titleLocked;
 
+	public List<Texture> listLevelTexture;
+
 	[HideInInspector]
 	public List<UITexture> lvlsView;
 
@@ -41,11 +43,14 @@ public class EnvironmentChoose : MonoBehaviour {
 			levelButton.transform.Find("lbl").GetComponent<UIEventTrigger>().onClick.Add(new EventDelegate(this, "onLvlItemClick"));
 			levelButton.transform.Find("lbl").GetComponent<UILabel>().text = "Level "+(i+1).ToString();
 			levelButton.transform.Find("lbl").name = (i+1).ToString();
+
+			if(listLevelTexture != null && i < listLevelTexture.Count && listLevelTexture[i] != null)
+				levelButton.GetComponent<UITexture>().mainTexture = listLevelTexture[i];
+
 			lvlsView.Add(levelButton.GetComponent<UITexture>());
 			levelButton.SetActive(true);
-			
+
 			levelList.GetComponent<UIGrid>().Reposition();
-			
 		}
 	}
 	public void onLvlItemClick()
