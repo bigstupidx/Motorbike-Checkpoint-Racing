@@ -113,16 +113,18 @@ public class Game : MonoBehaviour {
 	void Start()
 	{
 		Transform citys = GameObject.Find("Citys").transform;
-		if(data.currentLvl % 2 == 0)
-		{
-			citys.GetChild(0).gameObject.SetActive(true);
-			citys.GetChild(1).gameObject.SetActive(false);
-		}
-		else
-		{
-			citys.GetChild(0).gameObject.SetActive(false);
-			citys.GetChild(1).gameObject.SetActive(true);
-		}
+		citys.GetChild(0).gameObject.SetActive(false);
+		citys.GetChild(1).gameObject.SetActive(true);
+//		if(data.currentLvl % 2 == 0)
+//		{
+//			citys.GetChild(0).gameObject.SetActive(true);
+//			citys.GetChild(1).gameObject.SetActive(false);
+//		}
+//		else
+//		{
+//			citys.GetChild(0).gameObject.SetActive(false);
+//			citys.GetChild(1).gameObject.SetActive(true);
+//		}
 
 		taskView.text = missionDescription [data.currentLvl - 1];
 		taskImg.mainTexture = lvlTextures [data.currentLvl - 1];
