@@ -53,15 +53,17 @@ public class Game : MonoBehaviour {
 		}
 	}
 
-	string[] missionDescription = 
-	{
-		"Drive to the finish line as quickly as possible",
-		"Reports of a stolen vehicle in the area. Drive around and locate the stolen vehicle.",
-		"Robbers are hiding the stashes around the city. We have reports of their known locations, find them.",
-		"We’re getting reports of a stolen truck full of gold bars. Locate the stolen truck.",
-		"Well done for finding the truck, however the gold bars seemed to have fallen out of the back while driving. You know what's coming next. Go find the gold bars before they come back for them.",
-		"Reports of street racers have been sighted in the city. Locate and retrieve racing cars."
-	};
+	string missionDescription = "Drive through each checkpoint to complete race";
+
+//	string[] missionDescription = 
+//	{
+//		"Drive to the finish line as quickly as possible",
+//		"Reports of a stolen vehicle in the area. Drive around and locate the stolen vehicle.",
+//		"Robbers are hiding the stashes around the city. We have reports of their known locations, find them.",
+//		"We’re getting reports of a stolen truck full of gold bars. Locate the stolen truck.",
+//		"Well done for finding the truck, however the gold bars seemed to have fallen out of the back while driving. You know what's coming next. Go find the gold bars before they come back for them.",
+//		"Reports of street racers have been sighted in the city. Locate and retrieve racing cars."
+//	};
 
 	string[] itemFoundPreText = 
 	{
@@ -83,15 +85,17 @@ public class Game : MonoBehaviour {
 		" cars remain!"
 	};
 
-	string[] endLvlMessage = 
-	{
-		"Congratulations! You finished the race!",
-		"Congratulations! You have found stolen car!",
-		"Congratulations! You have found all the drugs!",
-		"Congratulations! You have found stolen truck!",
-		"Congratulations! You have found all the gold bars!",
-		"Congratulations! You have found all the stolen cars!"
-	};
+	string endLvlMessage = "Congratulations! You finished the race!";
+
+//	string[] endLvlMessage = 
+//	{
+//		"Congratulations! You finished the race!",
+//		"Congratulations! You have found stolen car!",
+//		"Congratulations! You have found all the drugs!",
+//		"Congratulations! You have found stolen truck!",
+//		"Congratulations! You have found all the gold bars!",
+//		"Congratulations! You have found all the stolen cars!"
+//	};
 
 	public static bool isRunning;
 	private bool isHomeShow = false;
@@ -126,7 +130,8 @@ public class Game : MonoBehaviour {
 //			citys.GetChild(1).gameObject.SetActive(true);
 //		}
 
-		taskView.text = missionDescription [data.currentLvl - 1];
+		//taskView.text = missionDescription [data.currentLvl - 1];
+		taskView.text = missionDescription;
 		taskImg.mainTexture = lvlTextures [data.currentLvl - 1];
 		setMissionItem ();
 		setBarrierItem ();
@@ -323,7 +328,8 @@ public class Game : MonoBehaviour {
 //				{
 					//GameObject.Find ("BikeManager").GetComponent<BikeManager> ().SetAdditionalBike();
 				if(circleRemaining == 0){
-					textErn = endLvlMessage[data.currentLvl-1];
+//					textErn = endLvlMessage[data.currentLvl-1];
+					textErn = endLvlMessage;
 					earningView.GetComponent<UILabel>().text =textErn;
 					earningView.GetComponent<Animator>().Play("earning",0,0f);
 					if(data.currentLvl == data.allowLvls)
