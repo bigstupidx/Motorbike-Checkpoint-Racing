@@ -165,7 +165,7 @@ public class EnvironmentChoose : MonoBehaviour {
 	}
 
 	public void GoToMainMenu(){
-		GoTo.LoadMenu ();
+		GoTo.LoadNewShop ();
 	}
 
 
@@ -178,6 +178,6 @@ public class EnvironmentChoose : MonoBehaviour {
 		loadScreen.SetActive (true);
 		data.currentLvl = lvl;
 		data.save ();
-		GoTo.LoadNewShop ();
+		GoTo.LoadGameTownOne ();
 	}
 }
