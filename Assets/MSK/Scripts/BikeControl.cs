@@ -44,6 +44,7 @@ public class BikeControl : MonoBehaviour
     [System.Serializable]
     public class WheelSetting
     {
+		public float Turning = 1.4f;
         public bool AutomaticRadius = true;
         public float Radius = 0.25f; // the radius of the wheels
         public float Weight = 3f; // the weight of a wheel
@@ -784,7 +785,7 @@ public class BikeControl : MonoBehaviour
 
 
             float SteerAngle = Mathf.Clamp((speed / transform.lossyScale.x) / bikeSetting.maxSteerAngle, 1.0f, bikeSetting.maxSteerAngle);
-            col.steerAngle = steer * (w.maxSteer / SteerAngle);
+			col.steerAngle = steer * bikeWheels.setting.Turning * (w.maxSteer / SteerAngle);
 
 
 

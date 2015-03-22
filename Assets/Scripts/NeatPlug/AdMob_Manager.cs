@@ -141,12 +141,12 @@ public class AdMob_Manager : MonoBehaviour {
 	}
 	void Update()
 	{
-			curTime+=Time.deltaTime;
-			if(curTime > timeForIntersentialRepeat)
-			{
-				curTime = 0f;
-				showInterstitial();
-			}
+//			curTime+=Time.deltaTime;
+//			if(curTime > timeForIntersentialRepeat)
+//			{
+//				curTime = 0f;
+//				showInterstitial();
+//			}
 	}
 	// Not yet used or tested but should work
 	public IEnumerator waitForInterstitialLoad()

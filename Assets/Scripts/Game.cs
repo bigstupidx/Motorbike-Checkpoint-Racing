@@ -351,6 +351,10 @@ public class Game : MonoBehaviour {
 	{
 		isRunning = false;
 		yield return new WaitForSeconds (3.5f);
+
+		//Show Interstatial
+		GameObject.Find ("AdmobAdAgent").GetComponent<AdMob_Manager> ().showInterstitial ();
+
 		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
 		GoTo.LoadEnvironmentChoose ();
 		yield return null;
