@@ -86,7 +86,11 @@ public class EnvironmentChoose : MonoBehaviour {
 		// cheat for aligne child on center after start
 		if (f == false) {
 			numItem = data.allowLvls-2;
-			RightClick();
+			if(numItem == -1){
+				numItem = 1;
+				LeftClick();
+			}else
+				RightClick();
 			f = true;
 		}
 
