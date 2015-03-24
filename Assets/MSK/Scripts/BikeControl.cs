@@ -17,6 +17,8 @@ public class BikeControl : MonoBehaviour
 	float moveUpValue = 0f;
 	float moveDownValue = 0f;
 	float stepForValue = 0.1f;//0.01f;
+
+	float maxReverseSpeed = 25f;
 	
     // Wheels Setting /////////////////////////////////
 
@@ -765,7 +767,7 @@ public class BikeControl : MonoBehaviour
             if (w.drive)
             {
                 // only set torque if wheel goes slower than the expected speed
-                if (Mathf.Abs(col.rpm) > Mathf.Abs(wantedRPM) || (currentGear == 0 && speed > 10))
+				if (Mathf.Abs(col.rpm) > Mathf.Abs(wantedRPM) || (currentGear == 0 && speed > maxReverseSpeed))
                 {
                     // wheel goes too fast, set torque to 0
                     col.motorTorque = 0;
