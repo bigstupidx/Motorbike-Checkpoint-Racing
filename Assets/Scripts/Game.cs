@@ -103,6 +103,9 @@ public class Game : MonoBehaviour {
 
 	private int circleRemaining;
 
+	private int currentReset = 0;
+	private int cntResetInLevel = 3;
+
 	public enum GameType
 	{
 		collectForCount,
@@ -189,6 +192,13 @@ public class Game : MonoBehaviour {
 		currentTime = 0f;//GameSettings.getTimeForLevel (data.currentLvl - 1);
 		setTimer ();
 		isGameOver = false;
+
+		currentReset++;
+		if (currentReset == cntResetInLevel) {
+			//Show Interstatial
+			GameObject.Find ("AdmobAdAgent").GetComponent<AdMob_Manager> ().showInterstitial ();
+			currentReset = 0;
+		}
 	}
 
 	List<GameObject> listCheckPoints = new List<GameObject>();

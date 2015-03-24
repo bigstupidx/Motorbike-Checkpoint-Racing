@@ -162,7 +162,8 @@ public class AdMob_Manager : MonoBehaviour {
 			
 			if(isInterstitialReady){
 				// Interstitial loaded fine, we can show it and record how long it took
-				showInterstitial(false);
+				// commented showing ad by self
+				//showInterstitial(false);
 				
 				GoogleAnalytics.Instance.LogEvent("Interstitial Load", "Success after " + curWaitTime + " seconds!");
 			} else {
