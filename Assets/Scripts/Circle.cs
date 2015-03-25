@@ -23,10 +23,17 @@ public class Circle : MonoBehaviour {
 		checkpoint
 	}
 
+	public bool isOpened = false;
+
 	void Start()
 	{
 		data = GameData.Get ();
-		setType (type);
+		//setType (type);
+		if (isOpened == true) {
+			setType (Type.green);
+		} else {
+			setType (Type.red);
+		}
 	}
 
 	public void setType(Type ringType)
@@ -54,10 +61,10 @@ public class Circle : MonoBehaviour {
 	{
 		if (gm.IsGameOver == true) return;
 
-		if(other.name.Trim() == "Body" && isShow)
+		if(other.name.Trim() == "Body" && isOpened) // && isShow
 		{
 			isShow = false;
-			StartCoroutine(hideRing());
+			//StartCoroutine(hideRing());
 			gm.showScore(points [(int)type],transform.GetSiblingIndex ());
 		}
 	}
@@ -67,6 +74,8 @@ public class Circle : MonoBehaviour {
 		gameObject.SetActive (true);
 		isShow = true;
 	}
+
+
 
 	IEnumerator hideRing()
 	{

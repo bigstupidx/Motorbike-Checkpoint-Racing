@@ -182,8 +182,19 @@ public class Game : MonoBehaviour {
 	}
 
 	public void restartCurrentMission(){
-		foreach (GameObject checkPoint in listCheckPoints)
-			checkPoint.SetActive (true);
+		for (int i = 0; i < listCheckPoints.Count; i++) {
+			listCheckPoints[i].SetActive (true);
+			// Reset color and available checkpoints
+			Circle firstCheckpoint = listCheckPoints[i].GetComponent<Circle>();
+			if(i == 0){
+				firstCheckpoint.isOpened = true;
+				firstCheckpoint.setType(Circle.Type.green);
+			}else{
+				firstCheckpoint.isOpened = false;
+				firstCheckpoint.setType(Circle.Type.red);
+			}
+
+		}
 
 		circleRemaining = itemsWrapper.transform.childCount;
 		circleRemaining -= data.GetFoundItemsCount ();
@@ -217,6 +228,12 @@ public class Game : MonoBehaviour {
 				foreach(Circle circleObj in listCircleCurrentMission)
 					listCheckPoints.Add(circleObj.gameObject);
 				GameObject.Find("BikeManager").GetComponent<BikeManager>().SetRotator(missionsObj.GetChild(i).GetComponent<ItemRotator>());
+				// open first checkpoint
+				if(listCheckPoints.Count >0){
+					Circle firstCheckpoint = listCheckPoints[0].GetComponent<Circle>();
+					firstCheckpoint.isOpened = true;
+					firstCheckpoint.setType(Circle.Type.green);
+				}
 			}
 		}
 	}
@@ -304,6 +321,15 @@ public class Game : MonoBehaviour {
 		refreshTimer ();
 	}
 
+	public void openNextCheckpoint(int curNumCheckpoint){
+		if (curNumCheckpoint < listCheckPoints.Count-1) {
+			Circle nextCheckPoint = listCheckPoints[curNumCheckpoint+1].GetComponent<Circle>();
+			if(nextCheckPoint != null){
+				nextCheckPoint.isOpened = true;
+				nextCheckPoint.setType(Circle.Type.green);
+			}
+		}
+	}
 
 	public void showScore(int points = 0, int id = -1)
 	{
@@ -323,6 +349,8 @@ public class Game : MonoBehaviour {
 		{
 			if(points != 0)
 			{
+				if(id != -1)
+					openNextCheckpoint(id);
 				/* tmp_ don't save progress
 				data.addFoundItem(id);
 				data.save();
