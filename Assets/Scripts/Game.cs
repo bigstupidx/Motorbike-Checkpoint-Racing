@@ -322,6 +322,8 @@ public class Game : MonoBehaviour {
 	}
 
 	public void openNextCheckpoint(int curNumCheckpoint){
+		Circle currentCheckPoint = listCheckPoints[curNumCheckpoint].GetComponent<Circle>();
+		currentCheckPoint.isOpened = false;
 		if (curNumCheckpoint < listCheckPoints.Count-1) {
 			Circle nextCheckPoint = listCheckPoints[curNumCheckpoint+1].GetComponent<Circle>();
 			if(nextCheckPoint != null){
