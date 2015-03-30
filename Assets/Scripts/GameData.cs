@@ -16,9 +16,12 @@ public class GameData{
 	public int currentLvl;
 	public int allowLvls;
 	public List<int> allowBikes;
+	public List<int> progressList;
 	public List<List<int>> collectedItems;
 
-	private string version = "save_00100";
+
+
+	private string version = "save_00113";
 	public static GameData Get()
 	{
 		if (instance == null)
@@ -65,9 +68,15 @@ public class GameData{
 		allowLvls = 1;
 		allowBikes = new List<int> ();
 		allowBikes.Add (0);
+
 		collectedItems = new List<List<int>> ();
 		for(int i = 0; i < 7;i++)
 			collectedItems.Add(new List<int>());
+
+		progressList = new List<int> ();
+		for (int i=0; i<GameSettings.countLevels; i++) {
+			progressList.Add(0);
+		}
 
 		save();
 	}
@@ -98,5 +107,24 @@ public class GameData{
 		}
 		return false;
 	}
-	
+
+	public void setCurrentLevelProgress(int numLevel, int milliseconds){
+		if ((milliseconds < progressList [numLevel-1]) || (progressList [numLevel - 1] == 0)) {
+			progressList [numLevel-1] = milliseconds;
+			//Debug.Log("Set time = "+milliseconds/1000+"in level №_"+numLevel);
+			save();
+		}
+	}
+
+	public int getLevelStars(int numLevel, int milliseconds){
+		int stars = 1;
+		if (milliseconds < 1000*GameSettings.getTimeForLevel (numLevel-1))
+			stars = 3;
+		else if(milliseconds <= 1000*(GameSettings.getTimeForLevel (numLevel-1)+GameSettings.deltaGoodTime))
+			stars = 2;
+		else
+			stars = 1;
+
+		return stars;
+	}
 }

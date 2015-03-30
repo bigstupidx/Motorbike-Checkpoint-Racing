@@ -395,6 +395,10 @@ public class Game : MonoBehaviour {
 						data.allowLvls ++;
 						data.save();
 					}
+
+					data.setCurrentLevelProgress(data.currentLvl, (int)(currentTime*1000));
+					Debug.Log("I got stars ="+data.getLevelStars(data.currentLvl, (int)(currentTime*1000)));
+
 					StartCoroutine(goToLvlChoose());
 				}
 //				}

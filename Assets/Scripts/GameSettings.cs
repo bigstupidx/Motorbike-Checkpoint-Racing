@@ -13,6 +13,8 @@ public class GameSettings{
 		Hard
 	}
 
+	public static int countLevels = 15;
+
 	public static int startLives = 3;
 
 	static float[] lowParameters = {4f,4f,1f};
@@ -29,7 +31,9 @@ public class GameSettings{
 	static float[] stepForFactors = {0.25f,0.5f,1.5f};
 
 	// set time for each level
-	static float[] listTimeLevel = {90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
+	public static float deltaGoodTime = 10f;
+
+	static float[] listTimeLevel = {45, 60, 70, 80, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
 	// set level for unlocking next bike
 	static int[] listUnlockingBike = {1,2,3,4};
 
