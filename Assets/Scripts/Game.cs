@@ -34,7 +34,8 @@ public class Game : MonoBehaviour {
 
 	public Transform missionsObj;
 
-	public Transform barriersObj;
+	private Transform barriersObj;
+	private List<GameObject> listBarriers = new List<GameObject>();
 
 	public MusicSfx soundOBJ;
 
@@ -119,6 +120,11 @@ public class Game : MonoBehaviour {
 
 	void Start()
 	{
+//		barriersObj = GameObject.Find ("Barriers").transform;
+//		for (int i=0; i<barriersObj.childCount; i++) {
+//			listBarriers.Add(barriersObj.GetChild(i).gameObject);
+//		}
+
 		Transform citys = GameObject.Find("Citys").transform;
 		citys.GetChild(0).gameObject.SetActive(false);
 		citys.GetChild(1).gameObject.SetActive(true);
@@ -240,11 +246,22 @@ public class Game : MonoBehaviour {
 
 	void setBarrierItem ()
 	{
+		barriersObj = GameObject.Find ("Barriers").transform;
+		for (int i=0; i<barriersObj.childCount; i++) {
+			listBarriers.Add(barriersObj.GetChild(i).gameObject);
+		}
+
 		string name = "Barrier" + data.currentLvl.ToString ();
 		for(int i = 0; i < barriersObj.childCount; i++)
 		{
 			if(barriersObj.GetChild(i).name != name)
 				barriersObj.GetChild(i).gameObject.SetActive(false);
+		}
+	}
+
+	void resetBarriers(){
+		foreach (GameObject barrier in listBarriers) {
+			barrier.SetActive(true);
 		}
 	}
 
@@ -272,6 +289,7 @@ public class Game : MonoBehaviour {
 	{
 		yield return new WaitForSeconds (3.5f);
 		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
+		resetBarriers ();
 		GoTo.LoadEnvironmentChoose ();
 		yield return null;
 	}
@@ -402,6 +420,9 @@ public class Game : MonoBehaviour {
 		GameObject.Find ("AdmobAdAgent").GetComponent<AdMob_Manager> ().showInterstitial ();
 
 		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
+
+		resetBarriers ();
+
 		GoTo.LoadEnvironmentChoose ();
 		yield return null;
 	}
@@ -506,6 +527,9 @@ public class Game : MonoBehaviour {
 		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
 		Time.timeScale = 1f;
 		isRunning = false;
+
+		resetBarriers ();
+
 		GoTo.LoadMenu ();
 	}
 
