@@ -17,6 +17,9 @@ public class EnvironmentChoose : MonoBehaviour {
 
 	public List<Texture> listLevelTexture;
 
+	public Texture starEnabled;
+	public Texture starDisabled;
+
 	[HideInInspector]
 	public List<UITexture> lvlsView;
 
@@ -50,9 +53,47 @@ public class EnvironmentChoose : MonoBehaviour {
 			lvlsView.Add(levelButton.GetComponent<UITexture>());
 			levelButton.SetActive(true);
 
+			setItemInfo(i+1, levelButton);
+
 			levelList.GetComponent<UIGrid>().Reposition();
 		}
 	}
+
+	private void setItemInfo(int numLevel, GameObject item){
+		item.transform.Find ("BestTime").GetComponent<UILabel> ().text = getTimeString (numLevel);
+
+		if (data.progressList [numLevel - 1] != 0) {
+			Transform stars = item.transform.Find ("Stars").transform;
+			for(int i=1; i<=data.getLevelStars(numLevel, data.progressList [numLevel - 1]); i++){
+				stars.Find ("Star"+i.ToString()).GetComponent<UITexture> ().mainTexture = starEnabled;
+			}
+		}
+	}
+
+	private string getTimeString(int numLevel){
+		string result = "0:00:00";
+
+		if (data.progressList [numLevel - 1] != 0) {
+			int milliseconds = data.progressList [numLevel - 1];
+
+			int minutes = (milliseconds / 1000) / 60;
+			int seconds = (milliseconds / 1000) % 60;
+			int miliseconds = milliseconds % 1000;
+			string minutes_str = minutes.ToString ();
+			string seconds_str = (seconds < 10) ? ("0" + seconds.ToString ()) : seconds.ToString ();
+			
+			string miliseconds_str;
+			if (miliseconds/10 < 10)
+				miliseconds_str = "0" + (miliseconds/10).ToString ();
+			else
+				miliseconds_str = (miliseconds/10).ToString ();
+
+			result = minutes_str + ":" + seconds_str + ":" + miliseconds_str;
+		}
+		
+		return result;
+	}
+
 	public void onLvlItemClick()
 	{
 		GameObject currentButton = UIEventTrigger.current.gameObject;
