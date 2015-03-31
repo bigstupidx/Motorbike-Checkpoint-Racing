@@ -19,6 +19,7 @@ public class Game : MonoBehaviour {
 	public GameObject preStartMenu;
 	public GameObject buttons;
 	public GameObject arrowControls;
+	public GameObject listBtns;
 	public GameObject tiltControls;
 	public GameObject nitroBtn;
 	public GameObject earningView;
@@ -42,6 +43,8 @@ public class Game : MonoBehaviour {
 	public UILabel forCash;
 
 	public UILabel timeLbl;
+
+	public GameObject resultInfo;
 
 	GameObject itemsWrapper;
 	GameData data;
@@ -156,7 +159,7 @@ public class Game : MonoBehaviour {
 		forCash.text = "";
 	}
 
-	void setTimer(){
+	void setTimer(UILabel label = null){
 		int minutes = (int)(currentTime / 60);
 		int seconds = (int)(currentTime % 60);
 		int miliseconds = (int)((currentTime*1000) % 1000);
@@ -176,7 +179,11 @@ public class Game : MonoBehaviour {
 //		else
 //			miliseconds_str = miliseconds.ToString ();
 
-		timeLbl.text = minutes_str + ":" + seconds_str + ":" + miliseconds_str;
+		if(label == null)
+			timeLbl.text = minutes_str + ":" + seconds_str + ":" + miliseconds_str;
+		else
+			label.text = minutes_str + ":" + seconds_str + ":" + miliseconds_str;
+
 	}
 
 	void hideFoundItems ()
@@ -388,18 +395,15 @@ public class Game : MonoBehaviour {
 				if(circleRemaining == 0){
 //					textErn = endLvlMessage[data.currentLvl-1];
 					textErn = endLvlMessage;
-					earningView.GetComponent<UILabel>().text =textErn;
-					earningView.GetComponent<Animator>().Play("earning",0,0f);
+					//earningView.GetComponent<UILabel>().text =textErn;
+					//earningView.GetComponent<Animator>().Play("earning",0,0f);
 					if(data.currentLvl == data.allowLvls)
 					{
 						data.allowLvls ++;
 						data.save();
 					}
-
-					data.setCurrentLevelProgress(data.currentLvl, (int)(currentTime*1000));
-					Debug.Log("I got stars ="+data.getLevelStars(data.currentLvl, (int)(currentTime*1000)));
-
-					StartCoroutine(goToLvlChoose());
+					//StartCoroutine(goToLvlChoose());
+					StartCoroutine(Wins());
 				}
 //				}
 
@@ -413,6 +417,38 @@ public class Game : MonoBehaviour {
 //			if(circleRemaining != 0)
 //			forCash.text = (itemsWrapper.transform.childCount - circleRemaining).ToString() + " / "+(itemsWrapper.transform.childCount-1).ToString();
 		}
+	}
+
+
+
+	IEnumerator Wins(){
+
+		data.setCurrentLevelProgress(data.currentLvl, (int)(currentTime*1000));
+		//Debug.Log("I got stars ="+data.getLevelStars(data.currentLvl, (int)(currentTime*1000)));
+
+		//arrowControls.SetActive (false);
+		listBtns.SetActive (false);
+
+		resultInfo.SetActive (true);
+		Transform stars = resultInfo.transform.Find ("Stars").transform;
+
+		UILabel yourTime = resultInfo.transform.Find ("BestTime").GetComponent<UILabel> ();
+		setTimer (yourTime);
+
+		int i = 1;
+		int countStars = data.getLevelStars (data.currentLvl, (int)(currentTime * 1000));
+		Animation starAnim;
+
+		while (i<=countStars) {
+			starAnim = stars.Find ("Star"+i.ToString()).GetComponent<Animation>();
+			float timeWaitingAnim = starAnim["star"].length;
+			starAnim.Play();
+			Debug.Log("Start Play = " + i);
+			yield return new WaitForSeconds(timeWaitingAnim);
+			i++;
+		}
+
+		yield return StartCoroutine(goToLvlChoose());
 	}
 
 	IEnumerator goToLvlChoose()

@@ -21,7 +21,7 @@ public class GameData{
 
 
 
-	private string version = "save_00113";
+	private string version = "save_00114";
 	public static GameData Get()
 	{
 		if (instance == null)
