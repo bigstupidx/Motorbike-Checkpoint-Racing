@@ -33,7 +33,7 @@ public class GameSettings{
 	// set time for each level
 	public static float deltaGoodTime = 10f;
 
-	static float[] listTimeLevel = {45, 60, 70, 80, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
+	static float[] listTimeLevel = {45, 60, 70, 80, 105, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
 	// set level for unlocking next bike
 	static int[] listUnlockingBike = {1,2,3,4};
 
