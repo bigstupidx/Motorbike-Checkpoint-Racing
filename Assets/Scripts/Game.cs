@@ -426,7 +426,7 @@ public class Game : MonoBehaviour {
 		data.setCurrentLevelProgress(data.currentLvl, (int)(currentTime*1000));
 		//Debug.Log("I got stars ="+data.getLevelStars(data.currentLvl, (int)(currentTime*1000)));
 
-		//arrowControls.SetActive (false);
+		arrowControls.SetActive (false);
 		listBtns.SetActive (false);
 
 		resultInfo.SetActive (true);
