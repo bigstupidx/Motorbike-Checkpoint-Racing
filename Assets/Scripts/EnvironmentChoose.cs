@@ -230,10 +230,12 @@ public class EnvironmentChoose : MonoBehaviour {
 	}
 
 	public void showLevelInfo(){
-		panelInfoLevel.SetActive (true);
-		panelInfoLevel.transform.Find ("InfoLevel/line_1/time").GetComponent<UILabel>().text =": " + getTimeStringInfo((int)(1000*GameSettings.getTime_3(numItem)));
-		panelInfoLevel.transform.Find ("InfoLevel/line_2/time").GetComponent<UILabel>().text =": " + getTimeStringInfo((int)(1000*GameSettings.getTime_2(numItem)));
-		panelInfoLevel.transform.Find ("InfoLevel/line_3/time").GetComponent<UILabel>().text =": " + getTimeStringInfo((int)(1000*GameSettings.getTime_1(numItem)));
+		if (numItem+1 <= data.allowLvls) {
+			panelInfoLevel.SetActive (true);
+			panelInfoLevel.transform.Find ("InfoLevel/line_1/time").GetComponent<UILabel> ().text = ": " + getTimeStringInfo ((int)(1000 * GameSettings.getTime_3 (numItem)));
+			panelInfoLevel.transform.Find ("InfoLevel/line_2/time").GetComponent<UILabel> ().text = ": " + getTimeStringInfo ((int)(1000 * GameSettings.getTime_2 (numItem)));
+			panelInfoLevel.transform.Find ("InfoLevel/line_3/time").GetComponent<UILabel> ().text = ": " + getTimeStringInfo ((int)(1000 * GameSettings.getTime_1 (numItem)));
+		}
 	}
 
 	public void BtnPlay(){
