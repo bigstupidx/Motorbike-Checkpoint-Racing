@@ -33,7 +33,9 @@ public class GameSettings{
 	// set time for each level
 	public static float deltaGoodTime = 10f;
 
-	static float[] listTimeLevel = {45, 60, 70, 80, 105, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
+	static float[] listTime_3 = {30, 36, 45, 53, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
+	static float[] listTime_2 = {45, 48, 60, 70, 105, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
+	static float[] listTime_1 = {60, 60, 75, 80, 120, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90};
 	// set level for unlocking next bike
 	static int[] listUnlockingBike = {1,2,3,4};
 
@@ -55,8 +57,16 @@ public class GameSettings{
 		return listUnlockingBike[currentBike];
 	}
 
-	public static float getTimeForLevel(int currentLevel){
-		return listTimeLevel[currentLevel];
+	public static float getTime_3(int currentLevel){
+		return listTime_3[currentLevel];
+	}
+
+	public static float getTime_2(int currentLevel){
+		return listTime_2[currentLevel];
+	}
+
+	public static float getTime_1(int currentLevel){
+		return listTime_1[currentLevel];
 	}
 
 	public static float[] GetParameters()

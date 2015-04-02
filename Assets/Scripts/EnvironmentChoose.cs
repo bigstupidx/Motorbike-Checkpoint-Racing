@@ -14,6 +14,7 @@ public class EnvironmentChoose : MonoBehaviour {
 	public GameObject rightButton;
 	public GameObject btnPlay;
 	public GameObject titleLocked;
+	public GameObject panelInfoLevel;
 
 	public List<Texture> listLevelTexture;
 
@@ -94,6 +95,28 @@ public class EnvironmentChoose : MonoBehaviour {
 		return result;
 	}
 
+	private string getTimeStringInfo(int milliseconds){
+		string result = "0:00:00";
+
+		int minutes = (milliseconds / 1000) / 60;
+		int seconds = (milliseconds / 1000) % 60;
+		int miliseconds = milliseconds % 1000;
+		string minutes_str = minutes.ToString ();
+		string seconds_str = (seconds < 10) ? ("0" + seconds.ToString ()) : seconds.ToString ();
+		
+		string miliseconds_str;
+		if (miliseconds/10 < 10)
+			miliseconds_str = "0" + (miliseconds/10).ToString ();
+		else
+			miliseconds_str = (miliseconds/10).ToString ();
+		
+		result = minutes_str + ":" + seconds_str + ":" + miliseconds_str;
+				
+		return result;
+	}
+
+	private int currentLevel;
+
 	public void onLvlItemClick()
 	{
 		GameObject currentButton = UIEventTrigger.current.gameObject;
@@ -101,7 +124,8 @@ public class EnvironmentChoose : MonoBehaviour {
 		{
 			int res;
 			Int32.TryParse(currentButton.name,out res);
-			playGame(res);
+			showLevelInfo();
+			//playGame(res);
 		}
 		else
 		{
@@ -203,6 +227,13 @@ public class EnvironmentChoose : MonoBehaviour {
 			rightButton.SetActive (false);
 		leftButton.SetActive (true);
 		checkAvailableLevel ();
+	}
+
+	public void showLevelInfo(){
+		panelInfoLevel.SetActive (true);
+		panelInfoLevel.transform.Find ("InfoLevel/line_1/time").GetComponent<UILabel>().text =": " + getTimeStringInfo((int)(1000*GameSettings.getTime_3(numItem)));
+		panelInfoLevel.transform.Find ("InfoLevel/line_2/time").GetComponent<UILabel>().text =": " + getTimeStringInfo((int)(1000*GameSettings.getTime_2(numItem)));
+		panelInfoLevel.transform.Find ("InfoLevel/line_3/time").GetComponent<UILabel>().text =": " + getTimeStringInfo((int)(1000*GameSettings.getTime_1(numItem)));
 	}
 
 	public void BtnPlay(){

@@ -21,7 +21,7 @@ public class GameData{
 
 
 
-	private string version = "save_00114";
+	private string version = "save_00115";
 	public static GameData Get()
 	{
 		if (instance == null)
@@ -117,13 +117,15 @@ public class GameData{
 	}
 
 	public int getLevelStars(int numLevel, int milliseconds){
-		int stars = 1;
-		if (milliseconds < 1000*GameSettings.getTimeForLevel (numLevel-1))
+		int stars = 0;
+		if (milliseconds <= 1000 * GameSettings.getTime_3 (numLevel - 1))
 			stars = 3;
-		else if(milliseconds <= 1000*(GameSettings.getTimeForLevel (numLevel-1)+GameSettings.deltaGoodTime))
+		else if (milliseconds > 1000 * GameSettings.getTime_3 (numLevel - 1) && milliseconds <= 1000 * GameSettings.getTime_2 (numLevel - 1))
 			stars = 2;
-		else
+		else if (milliseconds > 1000 * GameSettings.getTime_2 (numLevel - 1) && milliseconds <= 1000 * GameSettings.getTime_1 (numLevel - 1))
 			stars = 1;
+		else
+			stars = 0;
 
 		return stars;
 	}
