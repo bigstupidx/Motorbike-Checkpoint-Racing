@@ -144,11 +144,11 @@ public class Game : MonoBehaviour {
 
 		//taskView.text = missionDescription [data.currentLvl - 1];
 		taskView.text = missionDescription;
-		taskImg.mainTexture = lvlTextures [data.currentLvl - 1];
+		//taskImg.mainTexture = lvlTextures [data.currentLvl - 1];
 		setMissionItem ();
 		setBarrierItem ();
 		circleRemaining = itemsWrapper.transform.childCount;
-		circleRemaining -= data.GetFoundItemsCount ();
+		//circleRemaining -= data.GetFoundItemsCount ();
 		//hideFoundItems ();
 		showScore ();
 
@@ -210,7 +210,7 @@ public class Game : MonoBehaviour {
 		}
 
 		circleRemaining = itemsWrapper.transform.childCount;
-		circleRemaining -= data.GetFoundItemsCount ();
+		//circleRemaining -= data.GetFoundItemsCount ();
 		StartCoroutine(refreshCircles());
 		showScore ();
 		currentTime = 0f;//GameSettings.getTimeForLevel (data.currentLvl - 1);
