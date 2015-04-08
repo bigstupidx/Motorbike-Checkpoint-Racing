@@ -56,6 +56,11 @@ public class EnvironmentChoose : MonoBehaviour {
 
 			setItemInfo(i+1, levelButton);
 
+			//set need stars info
+			levelButton.transform.Find ("InfoLevel/line1/BestTime").GetComponent<UILabel> ().text = ": " + getTimeStringInfo ((int)(1000 * GameSettings.getTime_3 (i)));
+			levelButton.transform.Find ("InfoLevel/line2/BestTime").GetComponent<UILabel> ().text = ": " + getTimeStringInfo ((int)(1000 * GameSettings.getTime_2 (i)));
+			levelButton.transform.Find ("InfoLevel/line3/BestTime").GetComponent<UILabel> ().text = ": " + getTimeStringInfo ((int)(1000 * GameSettings.getTime_1 (i)));
+
 			levelList.GetComponent<UIGrid>().Reposition();
 		}
 	}
@@ -124,8 +129,8 @@ public class EnvironmentChoose : MonoBehaviour {
 		{
 			int res;
 			Int32.TryParse(currentButton.name,out res);
-			showLevelInfo();
-			//playGame(res);
+			//showLevelInfo();
+			playGame(res);
 		}
 		else
 		{
