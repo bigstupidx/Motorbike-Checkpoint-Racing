@@ -37,6 +37,7 @@ public class Game : MonoBehaviour {
 
 	private Transform barriersObj;
 	private List<GameObject> listBarriers = new List<GameObject>();
+	private List<GameObject> listMissions = new List<GameObject>();
 
 	public MusicSfx soundOBJ;
 
@@ -145,7 +146,8 @@ public class Game : MonoBehaviour {
 		//taskView.text = missionDescription [data.currentLvl - 1];
 		taskView.text = missionDescription;
 		//taskImg.mainTexture = lvlTextures [data.currentLvl - 1];
-		setMissionItem ();
+		//setMissionItem ();
+		setMissionItemFromIntro ();
 		setBarrierItem ();
 		circleRemaining = itemsWrapper.transform.childCount;
 		//circleRemaining -= data.GetFoundItemsCount ();
@@ -227,6 +229,54 @@ public class Game : MonoBehaviour {
 
 	List<GameObject> listCheckPoints = new List<GameObject>();
 
+	void setMissionItemFromIntro ()
+	{
+		Transform missionsObj = GameObject.Find ("Missions").transform;
+		for (int i=0; i<missionsObj.childCount; i++) {
+			listMissions.Add(missionsObj.GetChild(i).gameObject);
+		}
+		
+		string name = "Mission " + data.currentLvl.ToString ();
+		for(int i = 0; i < missionsObj.childCount; i++)
+		{
+			if(missionsObj.GetChild(i).name != name)
+				missionsObj.GetChild(i).gameObject.SetActive(false);
+			else{
+				itemsWrapper = missionsObj.GetChild(i).gameObject;
+
+				for(int j = 0; j < itemsWrapper.transform.childCount; j++){
+					itemsWrapper.transform.GetChild(j).GetComponent<Circle>().gm = this;
+				}
+			}
+		}
+
+		//itemsWrapper = missionsObj.FindChild (name).gameObject;
+		for(int i = 0; i < missionsObj.childCount; i++)
+		{
+			if(missionsObj.GetChild(i).name != name)
+				missionsObj.GetChild(i).gameObject.SetActive(false);
+			else{
+				Circle[] listCircleCurrentMission = missionsObj.GetChild(i).GetComponentsInChildren<Circle>();
+				listCheckPoints.Clear();
+				foreach(Circle circleObj in listCircleCurrentMission)
+					listCheckPoints.Add(circleObj.gameObject);
+				GameObject.Find("BikeManager").GetComponent<BikeManager>().SetRotator(missionsObj.GetChild(i).GetComponent<ItemRotator>());
+				// open first checkpoint
+				if(listCheckPoints.Count >0){
+					Circle firstCheckpoint = listCheckPoints[0].GetComponent<Circle>();
+					firstCheckpoint.isOpened = true;
+					firstCheckpoint.setType(Circle.Type.green);
+				}
+			}
+		}
+	}
+
+	void resetMissions(){
+		foreach (GameObject mission in listMissions) {
+			mission.SetActive(true);
+		}
+	}
+
 	void setMissionItem ()
 	{
 		string name = "Mission " + data.currentLvl.ToString ();
@@ -297,6 +347,7 @@ public class Game : MonoBehaviour {
 		yield return new WaitForSeconds (3.5f);
 		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
 		resetBarriers ();
+		resetMissions ();
 		GoTo.LoadEnvironmentChoose ();
 		yield return null;
 	}
@@ -462,6 +513,7 @@ public class Game : MonoBehaviour {
 		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
 
 		resetBarriers ();
+		resetMissions ();
 
 		GoTo.LoadEnvironmentChoose ();
 		yield return null;
@@ -569,6 +621,7 @@ public class Game : MonoBehaviour {
 		isRunning = false;
 
 		resetBarriers ();
+		resetMissions ();
 
 		GoTo.LoadMenu ();
 	}
