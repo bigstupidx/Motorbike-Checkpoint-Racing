@@ -27,6 +27,11 @@ public class BikeManager : MonoBehaviour {
 
 	GameObject[] listBikes;
 
+	// align bike cheat 
+	bool cheatReset = false;
+	int frameNum = 0;
+	int frameCount = 5;
+
 	void Awake()
 	{
 		data = GameData.Get ();
@@ -47,6 +52,24 @@ public class BikeManager : MonoBehaviour {
 
 		setEnableAllBikes (false);
 		setEnableCurrentBike ();
+		
+	}
+
+	void Update(){
+		alignBikeCheat ();
+	}
+	
+	private void alignBikeCheat(){
+		if (!cheatReset)
+		if (frameNum == frameCount) {
+			cheatReset = true;	
+			Transform tr;
+			tr = bikePositions.FindChild ("Position " + data.currentLvl.ToString ()).transform;
+			bikesContols.transform.position = tr.position;
+			bikesContols.transform.rotation = tr.rotation;
+			bikesContols.rigidbody.velocity = Vector3.zero;
+		} else
+			frameNum++;
 	}
 
 	private void setEnableCurrentBike(){
@@ -97,7 +120,7 @@ public class BikeManager : MonoBehaviour {
 		bikeControl.currentGear = 1;
 		bikeControl.curTorque = 0f;
 		bikeControl.shiftDelay = 0f;
-		b.SetActive(false);
+		//b.SetActive(false);
 	}
 
 	void setBikeProperties ()
