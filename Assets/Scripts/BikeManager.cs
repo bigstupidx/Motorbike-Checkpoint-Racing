@@ -78,6 +78,7 @@ public class BikeManager : MonoBehaviour {
 		bikesContols.gameObject.SetActive(true);
 		releaseAll ();
 		bikesContols.transform.GetComponent<BikeGUI> ().enabled = false;
+		bikesContols.resetTitl ();
 	}
 
 	void setBikeControl(){

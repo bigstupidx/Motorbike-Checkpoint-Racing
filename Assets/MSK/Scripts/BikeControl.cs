@@ -844,6 +844,8 @@ public class BikeControl : MonoBehaviour
 
     }
 
-
+	public void resetTitl(){
+		useTilt = false;
+	}
 
 }
