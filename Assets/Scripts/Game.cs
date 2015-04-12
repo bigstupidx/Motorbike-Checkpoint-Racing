@@ -272,6 +272,21 @@ public class Game : MonoBehaviour {
 	}
 
 	void resetMissions(){
+		for(int i = 0; i < listCheckPoints.Count; i++)
+		{
+			// open first checkpoint
+			if(listCheckPoints.Count >0){
+				Circle firstCheckpoint = listCheckPoints[i].GetComponent<Circle>();
+				if(i == 0){
+					firstCheckpoint.isOpened = true;
+					firstCheckpoint.setType(Circle.Type.green);
+				}else{
+					firstCheckpoint.isOpened = false;
+					firstCheckpoint.setType(Circle.Type.red);
+				}
+			}
+		}
+
 		foreach (GameObject mission in listMissions) {
 			mission.SetActive(true);
 		}
