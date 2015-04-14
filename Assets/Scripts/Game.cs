@@ -123,6 +123,7 @@ public class Game : MonoBehaviour {
 	void Awake()
 	{
 		data = GameData.Get ();
+		missionShow.SetActive (false);
 	}
 
 	void Start()
