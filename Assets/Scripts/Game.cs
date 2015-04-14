@@ -45,7 +45,10 @@ public class Game : MonoBehaviour {
 
 	public UILabel timeLbl;
 
+	public GameObject countdown;
+
 	public GameObject resultInfo;
+	public GameObject newBikeInfo;
 
 	GameObject itemsWrapper;
 	GameData data;
@@ -120,6 +123,7 @@ public class Game : MonoBehaviour {
 	void Awake()
 	{
 		data = GameData.Get ();
+		missionShow.SetActive (false);
 	}
 
 	void Start()
@@ -197,6 +201,10 @@ public class Game : MonoBehaviour {
 	}
 
 	public void restartCurrentMission(){
+		isRunning = false;
+		ShowControls(false);
+		buttons.SetActive (false);
+
 		for (int i = 0; i < listCheckPoints.Count; i++) {
 			listCheckPoints[i].SetActive (true);
 			// Reset color and available checkpoints
@@ -218,6 +226,10 @@ public class Game : MonoBehaviour {
 		currentTime = 0f;//GameSettings.getTimeForLevel (data.currentLvl - 1);
 		setTimer ();
 		isGameOver = false;
+
+		bool isShowControl = GameObject.Find ("BikeManager").GetComponent<BikeManager> ().bikesContols.Tilt;
+
+		StartCoroutine (CountdownStart(3, isShowControl));
 
 		currentReset++;
 		if (currentReset == cntResetInLevel) {
@@ -346,9 +358,33 @@ public class Game : MonoBehaviour {
 	public void StartGame(bool toHideLRButtons)
 	{
 		preStartMenu.SetActive (false);
-		buttons.SetActive (true);
+		StartCoroutine (CountdownStart(3, toHideLRButtons));
+	}
+
+	IEnumerator CountdownStart(int count, bool toHideLRButtons){
+		int i = count;
+		Animation countdownAnim = countdown.GetComponent<Animation>();
+		float timeWaitingAnim = countdownAnim["countdown"].length;
+		UILabel countdownLbl = countdown.GetComponent<UILabel>();
+		countdownLbl.text = i.ToString();
+
+		while (i>=1) {
+			countdownAnim.Play();
+			yield return new WaitForSeconds(timeWaitingAnim);
+			i--;
+			countdownLbl.text = i.ToString();
+		}
+		countdownAnim.Stop ();
+		countdownAnim.transform.localScale = new Vector3 (0, 0, 0);
+
 		isRunning = true;
 		ShowLeftRightButtons(!toHideLRButtons);
+		buttons.SetActive (true);
+	}
+
+	public void ShowControls(bool isShow){
+		arrowControls.SetActive (isShow);
+		tiltControls.SetActive (isShow);
 	}
 	
 	public void ShowLeftRightButtons(bool toShow) 
@@ -463,13 +499,23 @@ public class Game : MonoBehaviour {
 					textErn = endLvlMessage;
 					//earningView.GetComponent<UILabel>().text =textErn;
 					//earningView.GetComponent<Animator>().Play("earning",0,0f);
+
+					bool isOpenedNewBike = false;
+
 					if(data.currentLvl == data.allowLvls)
 					{
 						data.allowLvls ++;
 						data.save();
+
+						for(int i = 0; i < GameSettings.getListUnlockingBike().Length; i++){
+							if(GameSettings.getListUnlockingBike()[i] == data.allowLvls){
+								isOpenedNewBike = true;
+								break;
+							}
+						}
 					}
 					//StartCoroutine(goToLvlChoose());
-					StartCoroutine(Wins());
+					StartCoroutine(Wins(isOpenedNewBike));
 				}
 //				}
 
@@ -487,7 +533,7 @@ public class Game : MonoBehaviour {
 
 
 
-	IEnumerator Wins(){
+	IEnumerator Wins(bool isOpenedNewLevel){
 
 		data.setCurrentLevelProgress(data.currentLvl, (int)(currentTime*1000));
 		//Debug.Log("I got stars ="+data.getLevelStars(data.currentLvl, (int)(currentTime*1000)));
@@ -514,7 +560,13 @@ public class Game : MonoBehaviour {
 			i++;
 		}
 
-		yield return StartCoroutine(goToLvlChoose());
+		if (isOpenedNewLevel == false) {
+			yield return StartCoroutine (goToLvlChoose ());
+		}else {
+			GameObject.Find ("AdmobAdAgent").GetComponent<AdMob_Manager> ().showInterstitial ();
+			newBikeInfo.SetActive(true);
+		}
+
 	}
 
 	IEnumerator goToLvlChoose()
@@ -629,6 +681,18 @@ public class Game : MonoBehaviour {
 		isHomeShow = false;
 		homePopup.SetActive(false);
 	}
+
+	public void garage(){
+		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
+		Time.timeScale = 1f;
+		isRunning = false;
+		
+		resetBarriers ();
+		resetMissions ();
+		
+		GoTo.LoadNewShop ();
+	}
+
 	public void mainMenu()
 	{
 		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
