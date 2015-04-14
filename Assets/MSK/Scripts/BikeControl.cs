@@ -7,6 +7,12 @@ public class BikeControl : MonoBehaviour
 {
 	bool useTilt = false;
 
+	public bool Tilt{
+		get{
+			return useTilt;
+		}
+	}
+
 	bool moveUp = false;
 	bool moveDown = false;
 	bool moveLeft = false;

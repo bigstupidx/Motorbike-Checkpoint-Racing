@@ -45,6 +45,8 @@ public class Game : MonoBehaviour {
 
 	public UILabel timeLbl;
 
+	public GameObject countdown;
+
 	public GameObject resultInfo;
 
 	GameObject itemsWrapper;
@@ -197,6 +199,10 @@ public class Game : MonoBehaviour {
 	}
 
 	public void restartCurrentMission(){
+		isRunning = false;
+		ShowControls(false);
+		buttons.SetActive (false);
+
 		for (int i = 0; i < listCheckPoints.Count; i++) {
 			listCheckPoints[i].SetActive (true);
 			// Reset color and available checkpoints
@@ -218,6 +224,10 @@ public class Game : MonoBehaviour {
 		currentTime = 0f;//GameSettings.getTimeForLevel (data.currentLvl - 1);
 		setTimer ();
 		isGameOver = false;
+
+		bool isShowControl = GameObject.Find ("BikeManager").GetComponent<BikeManager> ().bikesContols.Tilt;
+
+		StartCoroutine (CountdownStart(3, isShowControl));
 
 		currentReset++;
 		if (currentReset == cntResetInLevel) {
@@ -346,9 +356,33 @@ public class Game : MonoBehaviour {
 	public void StartGame(bool toHideLRButtons)
 	{
 		preStartMenu.SetActive (false);
-		buttons.SetActive (true);
+		StartCoroutine (CountdownStart(3, toHideLRButtons));
+	}
+
+	IEnumerator CountdownStart(int count, bool toHideLRButtons){
+		int i = count;
+		Animation countdownAnim = countdown.GetComponent<Animation>();
+		float timeWaitingAnim = countdownAnim["countdown"].length;
+		UILabel countdownLbl = countdown.GetComponent<UILabel>();
+		countdownLbl.text = i.ToString();
+
+		while (i>=1) {
+			countdownAnim.Play();
+			yield return new WaitForSeconds(timeWaitingAnim);
+			i--;
+			countdownLbl.text = i.ToString();
+		}
+		countdownAnim.Stop ();
+		countdownAnim.transform.localScale = new Vector3 (0, 0, 0);
+
 		isRunning = true;
 		ShowLeftRightButtons(!toHideLRButtons);
+		buttons.SetActive (true);
+	}
+
+	public void ShowControls(bool isShow){
+		arrowControls.SetActive (isShow);
+		tiltControls.SetActive (isShow);
 	}
 	
 	public void ShowLeftRightButtons(bool toShow) 
