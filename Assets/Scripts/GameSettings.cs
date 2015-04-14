@@ -37,7 +37,7 @@ public class GameSettings{
 	static float[] listTime_2 = {45, 48, 60, 70, 105, 75, 75, 85, 100, 115, 115, 105, 135, 135, 195};
 	static float[] listTime_1 = {60, 60, 75, 80, 120, 90, 90, 100, 115, 130, 130, 120, 150, 150, 210};
 	// set level for unlocking next bike
-	static int[] listUnlockingBike = {1,5,8,12};
+	static int[] listUnlockingBike = {1,5,8,12}; // {1,2,4,12};
 
 	// speed, acceleration, lean, handling
 	static BikeStatics[] bikeStatisticsArray = {new BikeStatics(0.45f, 0.7f, 0.7f, 0.75f), 
@@ -55,6 +55,10 @@ public class GameSettings{
 
 	public static int getLevelForUnlockBike(int currentBike){
 		return listUnlockingBike[currentBike];
+	}
+
+	public static int[] getListUnlockingBike(){
+		return listUnlockingBike;
 	}
 
 	public static float getTime_3(int currentLevel){

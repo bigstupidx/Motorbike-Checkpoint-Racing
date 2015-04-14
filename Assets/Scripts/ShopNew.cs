@@ -36,7 +36,8 @@ public class ShopNew : MonoBehaviour {
 	{
 
 		data = GameData.Get ();
-		curBike = data.currentBike;
+		//curBike = data.currentBike;
+		curBike = getLastOpenedBike ();
 		cam.target = bikes [curBike].transform;
 		cashView.text = "Points: " + data.cash.ToString ();
 		bikeInfo.text = bikeNames [curBike];
@@ -55,6 +56,17 @@ public class ShopNew : MonoBehaviour {
 				precloseScreen.SetActive(true);
 			}
 		}
+	}
+
+	private int getLastOpenedBike(){
+		int numLastBike = 0;
+		//data.allowLvls
+		for (int i = 0; i < GameSettings.getListUnlockingBike().Length; i++) {
+			if(GameSettings.getListUnlockingBike()[i] <= data.allowLvls)
+				numLastBike = i;
+		}
+
+		return numLastBike;
 	}
 
 	private void chooseBike(int currentBike){

@@ -48,6 +48,7 @@ public class Game : MonoBehaviour {
 	public GameObject countdown;
 
 	public GameObject resultInfo;
+	public GameObject newBikeInfo;
 
 	GameObject itemsWrapper;
 	GameData data;
@@ -497,13 +498,23 @@ public class Game : MonoBehaviour {
 					textErn = endLvlMessage;
 					//earningView.GetComponent<UILabel>().text =textErn;
 					//earningView.GetComponent<Animator>().Play("earning",0,0f);
+
+					bool isOpenedNewBike = false;
+
 					if(data.currentLvl == data.allowLvls)
 					{
 						data.allowLvls ++;
 						data.save();
+
+						for(int i = 0; i < GameSettings.getListUnlockingBike().Length; i++){
+							if(GameSettings.getListUnlockingBike()[i] == data.allowLvls){
+								isOpenedNewBike = true;
+								break;
+							}
+						}
 					}
 					//StartCoroutine(goToLvlChoose());
-					StartCoroutine(Wins());
+					StartCoroutine(Wins(isOpenedNewBike));
 				}
 //				}
 
@@ -521,7 +532,7 @@ public class Game : MonoBehaviour {
 
 
 
-	IEnumerator Wins(){
+	IEnumerator Wins(bool isOpenedNewLevel){
 
 		data.setCurrentLevelProgress(data.currentLvl, (int)(currentTime*1000));
 		//Debug.Log("I got stars ="+data.getLevelStars(data.currentLvl, (int)(currentTime*1000)));
@@ -548,7 +559,13 @@ public class Game : MonoBehaviour {
 			i++;
 		}
 
-		yield return StartCoroutine(goToLvlChoose());
+		if (isOpenedNewLevel == false) {
+			yield return StartCoroutine (goToLvlChoose ());
+		}else {
+			GameObject.Find ("AdmobAdAgent").GetComponent<AdMob_Manager> ().showInterstitial ();
+			newBikeInfo.SetActive(true);
+		}
+
 	}
 
 	IEnumerator goToLvlChoose()
@@ -663,6 +680,18 @@ public class Game : MonoBehaviour {
 		isHomeShow = false;
 		homePopup.SetActive(false);
 	}
+
+	public void garage(){
+		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
+		Time.timeScale = 1f;
+		isRunning = false;
+		
+		resetBarriers ();
+		resetMissions ();
+		
+		GoTo.LoadNewShop ();
+	}
+
 	public void mainMenu()
 	{
 		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().Reset ();
