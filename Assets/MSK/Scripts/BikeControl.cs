@@ -639,8 +639,10 @@ public class BikeControl : MonoBehaviour
             {
                 if (transform.localEulerAngles.x > 320)
                 {
-                    bikeSetting.shiftCentre.y = bikeSetting.shiftSpeed.y;
-                    bikeSetting.shiftCentre.z = bikeSetting.shiftSpeed.z;
+					//TODO: tyt na popa tanovitsya
+//					Debug.Log("vklu4ilos");
+//                    bikeSetting.shiftCentre.y = bikeSetting.shiftSpeed.y;
+//                    bikeSetting.shiftCentre.z = bikeSetting.shiftSpeed.z;
                 }
                 else
                 {
