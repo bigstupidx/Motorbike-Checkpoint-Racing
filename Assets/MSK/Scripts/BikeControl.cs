@@ -406,6 +406,8 @@ public class BikeControl : MonoBehaviour
 	
     void Update()
     {
+		if (!Game.isRunning)
+						return;
 		if(moveUp)
 		{
 			if(moveUpValue + stepForValue <=1f)
