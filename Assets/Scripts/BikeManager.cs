@@ -146,13 +146,17 @@ public class BikeManager : MonoBehaviour {
 		GameObject.FindObjectOfType<Game> ().restartCurrentMission ();
 	}
 
-	void releaseAll()
+	 public void releaseAll()
 	{
-		bikesContols.ReleaseMoveDownBtn();
-		bikesContols.ReleaseMoveLeftBtn();
-		bikesContols.ReleaseMoveRightBtn();
-		bikesContols.ReleaseMoveUpBtn();
-		bikesContols.ReleaseNitroBtn();
+		for(int i =0; i < listBikes.Length; i++)
+		{
+			BikeControl b = listBikes[i].GetComponent<BikeControl>();
+			b.ReleaseMoveDownBtn();
+			b.ReleaseMoveLeftBtn();
+			b.ReleaseMoveRightBtn();
+			b.ReleaseMoveUpBtn();
+			b.ReleaseNitroBtn();
+		}
 	}
 
 	public void OnTiltPress()
@@ -168,6 +172,8 @@ public class BikeManager : MonoBehaviour {
 
 	public void PressMoveUpBtn()
 	{
+//		if (!Game.isRunning)
+//						return;
 		bikesContols.PressMoveUpBtn ();
 	}
 	public void ReleaseMoveUpBtn()
@@ -177,6 +183,8 @@ public class BikeManager : MonoBehaviour {
 
 	public void PressMoveDownBtn()
 	{
+//		if (!Game.isRunning)
+//			return;
 		bikesContols.PressMoveDownBtn();
 	}
 	public void ReleaseMoveDownBtn()
@@ -186,10 +194,14 @@ public class BikeManager : MonoBehaviour {
 
 	public void PressMoveRightBtn()
 	{
+//		if (!Game.isRunning)
+//			return;
 		bikesContols.PressMoveRightBtn ();
 	}
 	public void ReleaseMoveRightBtn()
 	{
+//		if (!Game.isRunning)
+//			return;
 		bikesContols.ReleaseMoveRightBtn();
 	}
 

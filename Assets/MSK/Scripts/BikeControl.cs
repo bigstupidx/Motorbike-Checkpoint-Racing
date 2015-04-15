@@ -406,8 +406,15 @@ public class BikeControl : MonoBehaviour
 	
     void Update()
     {
-		if (!Game.isRunning)
-						return;
+//		Debug.Log (moveUpValue.ToString() + "  " + moveDownValue.ToString() + "  " + moveLeft + "   " + moveRight);
+		if(!Game.isRunning)
+		{
+			ReleaseMoveDownBtn();
+			ReleaseMoveLeftBtn();
+			ReleaseMoveRightBtn();
+			ReleaseMoveUpBtn();
+			ReleaseNitroBtn();
+		}
 		if(moveUp)
 		{
 			if(moveUpValue + stepForValue <=1f)
@@ -521,6 +528,11 @@ public class BikeControl : MonoBehaviour
 			steer = 0;
 		}
 		#endif
+//		if(!Game.isRunning)
+//		{
+//			accel = 0f;
+//			steer = 0f;
+//		}
         foreach (Light brakeLight in bikeLights.brakeLights)
         {
             if (accel < 0 || speed < 1.0f)

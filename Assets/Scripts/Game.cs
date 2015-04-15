@@ -204,6 +204,7 @@ public class Game : MonoBehaviour {
 		isRunning = false;
 		ShowControls(false);
 		buttons.SetActive (false);
+		GameObject.Find ("BikeManager").GetComponent<BikeManager> ().releaseAll();
 
 		for (int i = 0; i < listCheckPoints.Count; i++) {
 			listCheckPoints[i].SetActive (true);
@@ -427,6 +428,8 @@ public class Game : MonoBehaviour {
 
 	void Update()
 	{
+		if (Input.GetKeyDown (KeyCode.Space))
+						GameObject.Find ("BikeManager").GetComponent<BikeManager> ().OnReset ();
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			if(!isHomeShow)
